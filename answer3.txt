@@ -1,0 +1,51 @@
+docker run -it --rm --name node node:15.14-alpine
+Unable to find image 'node:15.14-alpine' locally
+15.14-alpine: Pulling from library/node
+ddad3d7c1e96: Pull complete
+0e18143e8d4d: Pull complete
+377ad682a98b: Pull complete
+99b3e0ba5237: Pull complete
+Digest: sha256:6edd37368174c15d4cc59395ca2643be8e2a1c9846714bc92c5f5c5a92fb8929
+Status: Downloaded newer image for node:15.14-alpine
+Welcome to Node.js v15.14.0.
+Type ".help" for more information.
+
+panyasnap@PolinasNout:~$ docker run --name first_node -d -v $(pwd):/var/first/data node:15.14 sleep infinity
+Unable to find image 'node:15.14' locally
+15.14: Pulling from library/node
+bfde2ec33fbc: Pull complete
+787f5e2f1047: Pull complete
+7b6173a10eb8: Pull complete
+dc05be471d51: Pull complete
+55fab5cadd3c: Pull complete
+bd821d20ef8c: Pull complete
+6041b69671c6: Pull complete
+989c5d2d2313: Pull complete
+4b57d41e8391: Pull complete
+Digest: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Status: Downloaded newer image for node:15.14
+583ee069779668e6c13c7cb114b998017874be3c1564128c94ff675d655f9dc0
+
+panyasnap@PolinasNout:~$ docker run --name second_node -d -v $(pwd):/var/second/data node:15.14 sleep infinity
+413a5fb29373527fcddba58badd5f52adcc6058073d4ab9fbb7f4e3ed1e1100b
+
+panyasnap@PolinasNout:~$ docker exec -d first_node touch /var/first/data/first.txt
+panyasnap@PolinasNout:~$ docker exec -d second_node touch /var/first/data/sec.txt
+panyasnap@PolinasNout:~$ docker exec -i -t second_node ls /var/second/data
+first.txt  sec.txt  second.txt
+
+panyasnap@PolinasNout:~$ docker stop $(docker ps -a -q)
+413a5fb29373
+583ee0697796
+ce1f5cefa62a
+6a1fae4fdb3e
+a5b548bcb136
+
+panyasnap@PolinasNout:~$  docker rmi -f 75631da67663
+Untagged: node:15.14-alpine
+Untagged: node@sha256:6edd37368174c15d4cc59395ca2643be8e2a1c9846714bc92c5f5c5a92fb8929
+Deleted: sha256:75631da67663db1d5f3518892db3259b52f105d4b692f88cf2457a0b27abf0e1
+Deleted: sha256:158a0c9086736df897b2be3838b3acd39c6258d5f564f601dcc23e5ed9fd1a88
+Deleted: sha256:7ff49c61cfd4cd0e2d3fc07f81904c5e19b7ea96b715db515dbe396a86dd01f2
+Deleted: sha256:06a84147b938c0ea306dc5d0a632b708a4e73c6de82a6ca2de1c0a95338f98b9
+Deleted: sha256:9a5d14f9f5503e55088666beef7e85a8d9625d4fa7418e2fe269e9c54bcb853c

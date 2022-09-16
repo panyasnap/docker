@@ -1,0 +1,29 @@
+PS C:\Users\p.antonova\WebstormProjects\test> docker run -it --rm --name node node:15.14-alpine     
+Unable to find image 'node:15.14-alpine' locally
+15.14-alpine: Pulling from library/node
+ddad3d7c1e96: Pull complete
+0e18143e8d4d: Pull complete
+377ad682a98b: Pull complete
+99b3e0ba5237: Pull complete
+Digest: sha256:6edd37368174c15d4cc59395ca2643be8e2a1c9846714bc92c5f5c5a92fb8929
+Status: Downloaded newer image for node:15.14-alpine
+Welcome to Node.js v15.14.0.
+
+PS C:\Users\p.antonova\WebstormProjects\test>  docker run -it -e --name  mynode node:15.14-alpine     
+Welcome to Node.js v15.14.0.
+Type ".help" for more information.
+>
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker exec -it mynode sh
+/ # export NAME="Полина"
+/ # export SURNAME="Антонова"
+/ # node
+console.log ('привет '+ process.env.NAME, process.env.SURNAME)
+привет Полина Антонова
+PS C:\Users\p.antonova\WebstormProjects\test> docker stop mynode
+mynode
+PS C:\Users\p.antonova\WebstormProjects\test> docker rmi -f 75631da67663
+Untagged: node:15.14-alpine
+Untagged: node@sha256:6edd37368174c15d4cc59395ca2643be8e2a1c9846714bc92c5f5c5a92fb8929
+Deleted: sha256:75631da67663db1d5f3518892db3259b52f105d4b692f88cf2457a0b27abf0e1

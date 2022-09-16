@@ -1,0 +1,118 @@
+PS C:\Users\p.antonova\WebstormProjects\test> docker pull busybox
+Using default tag: latest
+latest: Pulling from library/busybox
+729ce43e2c91: Pull complete
+Digest: sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+Status: Downloaded newer image for busybox:latest
+docker.io/library/busybox:latest
+PS C:\Users\p.antonova\WebstormProjects\test> docker run busybox
+PS C:\Users\p.antonova\WebstormProjects\test> docker run busybox echo "hello from busybox"
+hello from busybox
+PS C:\Users\p.antonova\WebstormProjects\test> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\Users\p.antonova\WebstormProjects\test> docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS                      PORTS                NAMES
+e31eea895da5   busybox                  "echo 'hello from bu…"   28 seconds ago   Exited (0) 27 seconds ago                        priceless_goldwasser
+52e0d750b024   busybox                  "sh"                     2 minutes ago    Exited (0) 2 minutes ago                         cool_kirch
+2941ad7a94be   busybox                  "sh"                     5 minutes ago    Exited (0) 5 minutes ago                         stupefied_kapitsa
+afd8ac609a6a   busybox                  "IMAGE ping netology…"   6 minutes ago    Created                                          affectionate_payne
+1ade44d7a607   docker/getting-started   "/docker-entrypoint.…"   6 months ago     Exited (255) 6 months ago   0.0.0.0:80->80/tcp   gallant_rosalind
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker run --name busybox -i -t alpine ping netology.ru -c7
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+213ec9aee27d: Pull complete
+Digest: sha256:bc41182d7ef5ffc53a40b044e725193bc10142a1243f395ee852a8d9730fc2ad
+Status: Downloaded newer image for alpine:latest
+PING netology.ru (188.114.99.202): 56 data bytes
+64 bytes from 188.114.99.202: seq=0 ttl=37 time=22.242 ms
+64 bytes from 188.114.99.202: seq=1 ttl=37 time=22.909 ms
+64 bytes from 188.114.99.202: seq=2 ttl=37 time=11.429 ms
+64 bytes from 188.114.99.202: seq=3 ttl=37 time=11.741 ms
+64 bytes from 188.114.99.202: seq=4 ttl=37 time=12.744 ms
+64 bytes from 188.114.99.202: seq=5 ttl=37 time=11.930 ms
+64 bytes from 188.114.99.202: seq=6 ttl=37 time=13.728 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 11.429/15.246/22.909 ms
+PS C:\Users\p.antonova\WebstormProjects\test> docker rename busybox pinger
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS                      PORTS                NAMES
+b33506fc27b5   alpine                   "ping netology.ru -c7"   8 minutes ago    Exited (0) 7 minutes ago                         pinger
+e31eea895da5   busybox                  "echo 'hello from bu…"   17 minutes ago   Exited (0) 17 minutes ago                        priceless_goldwasser
+52e0d750b024   busybox                  "sh"                     18 minutes ago   Exited (0) 18 minutes ago                        cool_kirch
+2941ad7a94be   busybox                  "sh"                     22 minutes ago   Exited (0) 22 minutes ago                        stupefied_kapitsa
+afd8ac609a6a   busybox                  "IMAGE ping netology…"   22 minutes ago   Created                                          affectionate_payne
+1ade44d7a607   docker/getting-started   "/docker-entrypoint.…"   6 months ago     Exited (255) 6 months ago   0.0.0.0:80->80/tcp   gallant_rosalind
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker logs pinger
+PING netology.ru (188.114.99.202): 56 data bytes
+64 bytes from 188.114.99.202: seq=0 ttl=37 time=22.242 ms
+64 bytes from 188.114.99.202: seq=1 ttl=37 time=22.909 ms
+64 bytes from 188.114.99.202: seq=2 ttl=37 time=11.429 ms
+64 bytes from 188.114.99.202: seq=3 ttl=37 time=11.741 ms
+64 bytes from 188.114.99.202: seq=4 ttl=37 time=12.744 ms
+64 bytes from 188.114.99.202: seq=5 ttl=37 time=11.930 ms
+64 bytes from 188.114.99.202: seq=6 ttl=37 time=13.728 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 11.429/15.246/22.909 ms
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker start pinger
+pinger
+PS C:\Users\p.antonova\WebstormProjects\test> docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS         PORTS     NAMES
+b33506fc27b5   alpine    "ping netology.ru -c7"   21 minutes ago   Up 3 seconds             pinger
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker ps -a       
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS                          PORTS                NAMES
+b33506fc27b5   alpine                   "ping netology.ru -c7"   22 minutes ago   Exited (0) About a minute ago                        pinger
+e31eea895da5   busybox                  "echo 'hello from bu…"   31 minutes ago   Exited (0) 31 minutes ago                            priceless_goldwasser
+52e0d750b024   busybox                  "sh"                     33 minutes ago   Exited (0) 33 minutes ago                            cool_kirch
+2941ad7a94be   busybox                  "sh"                     37 minutes ago   Exited (0) 37 minutes ago                            stupefied_kapitsa
+afd8ac609a6a   busybox                  "IMAGE ping netology…"   37 minutes ago   Created                                              affectionate_payne
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker logs pinger
+PING netology.ru (188.114.99.202): 56 data bytes
+64 bytes from 188.114.99.202: seq=0 ttl=37 time=22.242 ms
+64 bytes from 188.114.99.202: seq=1 ttl=37 time=22.909 ms
+64 bytes from 188.114.99.202: seq=2 ttl=37 time=11.429 ms
+64 bytes from 188.114.99.202: seq=3 ttl=37 time=11.741 ms
+64 bytes from 188.114.99.202: seq=4 ttl=37 time=12.744 ms
+64 bytes from 188.114.99.202: seq=5 ttl=37 time=11.930 ms
+64 bytes from 188.114.99.202: seq=6 ttl=37 time=13.728 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 11.429/15.246/22.909 ms
+PING netology.ru (188.114.98.202): 56 data bytes
+64 bytes from 188.114.98.202: seq=0 ttl=37 time=66.304 ms
+64 bytes from 188.114.98.202: seq=2 ttl=37 time=84.497 ms
+64 bytes from 188.114.98.202: seq=5 ttl=37 time=75.023 ms
+64 bytes from 188.114.98.202: seq=6 ttl=37 time=73.356 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 4 packets received, 42% packet loss
+round-trip min/avg/max = 66.304/74.795/84.497 ms
+PING netology.ru (188.114.98.202): 56 data bytes
+64 bytes from 188.114.98.202: seq=2 ttl=37 time=57.628 ms
+64 bytes from 188.114.98.202: seq=3 ttl=37 time=62.921 ms
+64 bytes from 188.114.98.202: seq=5 ttl=37 time=62.631 ms
+64 bytes from 188.114.98.202: seq=6 ttl=37 time=57.878 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 4 packets received, 42% packet loss
+round-trip min/avg/max = 57.628/60.264/62.921 ms
+
+8. 3, 21
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker rm pinger
+pinger
+
+PS C:\Users\p.antonova\WebstormProjects\test> docker rmi -f busybox
+Untagged: busybox:latest
+Untagged: busybox@sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+Deleted: sha256:2bd29714875d9206777f9e8876033cbcd58edd14f2c0f1203435296b3f31c5f7
